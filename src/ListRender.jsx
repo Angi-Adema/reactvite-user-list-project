@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function ListRender() {
+export function ListRender() {
   const [list, setList] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
