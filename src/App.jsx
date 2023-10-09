@@ -1,14 +1,11 @@
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState } from "react";
 import { Users } from "./Users";
 
 export default function App() {
-  const [list, setList] = useState({ jsx });
+  const [user, setUser] = useState([]);
   const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => {
         if (res.status === 200) {
@@ -18,31 +15,18 @@ export default function App() {
         }
       })
       .then((data) => {
-        setList(data);
+        setUser(data);
       })
-      .catch((err) => setError(err))
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch((err) => setError(err));
   }, []);
-
-  let jsx;
-
-  if (loading) {
-    jsx = <h1>Loading...</h1>;
-  } else if (error != null) {
-    jsx = <h1>Error loading data!</h1>;
-  } else {
-    jsx = JSON.stringify(list);
-  }
 
   return (
     <>
       <h1>User List</h1>
       <ul>
-        {list.map((item) => {
-          return <Fragment key={item.id}>{item.name}</Fragment>;
-        })}
+        {user.map((user) => (
+          <Users key={user.id} name={user.name} />
+        ))}
       </ul>
     </>
   );
