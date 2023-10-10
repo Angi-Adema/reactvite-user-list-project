@@ -58,3 +58,5 @@ function App() {
 }
 
 export default App;
+
+// If fetching from a json file within the project, just put the json file in the public folder and fetch from there. (fetch("users.json")
