@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { Users } from "./Users";
 
-export default function App() {
+function App() {
   const [user, setUser] = useState([]);
-  const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
 
   useEffect(() => {
     setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/users")
+    setError(undefined);
+
+    // const controller = new AbortController();
+    fetch("https://jsonplaceholder.typicode.com/users") //, { signal: controller.signal }
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -19,8 +22,14 @@ export default function App() {
       .then((data) => {
         setUser(data);
       })
-      .catch((err) => setError(err))
-      .finally(() => setLoading(false));
+      .catch((e) => setError(e))
+      .finally(() => {
+        setLoading(false);
+      });
+
+    // return () => {
+    //   controller.abort();
+    // };
   }, []);
 
   let jsx;
@@ -36,6 +45,7 @@ export default function App() {
   return (
     <>
       <h1>User List</h1>
+      {jsx}
       <ul>
         {user.map((user) => (
           <Users key={user.id} name={user.name} />
@@ -44,3 +54,5 @@ export default function App() {
     </>
   );
 }
+
+export default App;
