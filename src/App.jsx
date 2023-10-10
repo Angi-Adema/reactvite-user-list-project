@@ -36,10 +36,10 @@ function App() {
 
   if (loading) {
     jsx = <h2>Loading...</h2>;
-  } else if (error != null) {
-    jsx = <h2>Error Loading Data!</h2>;
   } else {
-    jsx = JSON.stringify(user);
+    if (error != null) {
+      jsx = <h2>Error Loading Data!</h2>;
+    }
   }
 
   return (
