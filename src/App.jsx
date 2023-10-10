@@ -10,8 +10,10 @@ function App() {
     setLoading(true);
     setError(undefined);
 
-    // const controller = new AbortController();
-    fetch("https://jsonplaceholder.typicode.com/users") //, { signal: controller.signal }
+    const controller = new AbortController();
+    fetch("https://jsonplaceholder.typicode.com/users", {
+      signal: controller.signal,
+    })
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -27,9 +29,9 @@ function App() {
         setLoading(false);
       });
 
-    // return () => {
-    //   controller.abort();
-    // };
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   let jsx;
